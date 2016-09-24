@@ -36,5 +36,42 @@
         <servlet-name>Servlet3</servlet-name>
         <url-pattern>/nihao</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <display-name>JAX-RS REST Servlet</display-name>
+        <servlet-name>JAX-RS REST Servlet</servlet-name>
+        <servlet-class>
+            com.sun.jersey.spi.container.servlet.ServletContainer
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JAX-RS REST Servlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>velocity</servlet-name>
+        <servlet-class>org.apache.velocity.tools.view.VelocityLayoutServlet</servlet-class>
+        <init-param>
+            <param-name>org.apache.velocity.tools.deprecationSupportMode</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>org.apache.velocity.tools.cleanConfiguration</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>org.apache.velocity.tools.userCanOverwriteTools</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>velocity</servlet-name>
+        <url-pattern>*.vm</url-pattern>
+    </servlet-mapping>
+
 </web-app>
         

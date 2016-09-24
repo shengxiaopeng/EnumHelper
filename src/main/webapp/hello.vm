@@ -1,0 +1,11 @@
+#set($hello='hihi hello')
+
+$hello  veloctiy
+
+<br>
+#foreach($cookie in $request.getCookies())
+    $cookie.name : $cookie.value
+#end
+
+<br>
+$!request.getParameter('para')
