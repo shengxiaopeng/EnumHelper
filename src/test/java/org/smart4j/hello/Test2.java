@@ -7,4 +7,5 @@ package org.smart4j.hello;
  * @create 2016/9/15.
  */
 public class Test2 {
+
 }
