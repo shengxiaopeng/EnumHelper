@@ -37,6 +37,16 @@
         <url-pattern>/nihao</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DispatchServlet</servlet-name>
+        <servlet-class>org.smart4j.chapter1.DispatchServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DispatchServlet</servlet-name>
+        <url-pattern>*.action</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <display-name>JAX-RS REST Servlet</display-name>

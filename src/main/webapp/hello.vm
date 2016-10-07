@@ -6,6 +6,10 @@ $hello  veloctiy
 #foreach($cookie in $request.getCookies())
     $cookie.name : $cookie.value
 #end
+<hr/>
+#foreach($entity in $entitys)
+    $entity.name   -----   $entity.type  <br/>
+#end
 
 <br>
 $!request.getParameter('para')
