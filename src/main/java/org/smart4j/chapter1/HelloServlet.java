@@ -21,6 +21,8 @@ public class HelloServlet extends HttpServlet {
         //super.doGet(req, resp);
         req.setAttribute("time",new Date());
         req.getRequestDispatcher("/WEB-INF/jsp/hello.jsp").forward(req,resp);
-
+       // getServletContext().getInitParameter()
+       // String initParameter = getServletConfig().getServletContext().getInitParameter();
+        //String initParameter = getInitParameter();
     }
 }

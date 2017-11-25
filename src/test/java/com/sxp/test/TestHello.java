@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +31,17 @@ public class TestHello {
     }
 
     public static void main(String[] args) {
-        System.out.println("hello test");
+        //System.out.println("hello test");
+        JedisPool pool = new JedisPool("192.168.130.128",6379);
+        Jedis jedis = pool.getResource();
+       // Jedis jedis=new Jedis("192.168.130.128",6379);
+        jedis.set("hello","hello jedis");
+        String hello = jedis.get("hello");
+
+        System.out.println(hello);
+        jedis.close();
+
+
     }
 
     @Before

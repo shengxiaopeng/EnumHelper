@@ -40,6 +40,10 @@ public class Basic {
         BigDecimal bigDecimal=new BigDecimal(5);
         bigDecimal.add(new BigDecimal(6));
 
+        List<Integer> listInt=null;
+        List listL=listInt;
+        //List<Object> listO=listInt;
+
     }
 
    private  class  Inner{

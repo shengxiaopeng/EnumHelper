@@ -34,7 +34,7 @@
 
     <servlet-mapping>
         <servlet-name>Servlet3</servlet-name>
-        <url-pattern>/nihao</url-pattern>
+        <url-pattern>*.nihao</url-pattern>
     </servlet-mapping>
 
     <servlet>
