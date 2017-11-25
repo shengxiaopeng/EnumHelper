@@ -26,11 +26,15 @@ public class DataFilter {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         list.add(row);
 
-        List<Map<String, Object>> filter = new DataFilter().filter(list);
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000; i++) {
+            List<Map<String, Object>> filter = new DataFilter().filter(list);
+            //System.out.println(JSON.toJSONString(filter));
+        }
+        long period = System.currentTimeMillis() - start;
+        System.out.println("execute 1,000 times takes:" + period + " ms");
 
-        System.out.println(JSON.toJSONString(filter));
-
-       // Integer.valueOf()
+        // Integer.valueOf()
     }
 
     static String[] ignores = new String[]{"ignore"};
@@ -45,6 +49,7 @@ public class DataFilter {
 
     static String operateConfig = "{'operate':'(Integer.valueOf(real+operate))*100'}";
     static JSONObject operateMap = JSON.parseObject(operateConfig);
+
     /**
      * 对 List<Map> 进行过滤
      *
@@ -56,6 +61,7 @@ public class DataFilter {
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
         for (Map<String, Object> oldRow : dataList) {
 
+            setBinding(oldRow);
             //对每行进行操作
             //
             Map<String, Object> newRow = new HashMap<String, Object>();
@@ -67,9 +73,10 @@ public class DataFilter {
                 //alais
                 if (alaisMap.containsKey(entry.getKey()))
                     newRow.put((String) alaisMap.get(entry.getKey()), entry.getValue());
-                //operate
+                    //operate
                 else if (operateMap.containsKey(entry.getKey()))
-                    newRow.put(entry.getKey(), getOperateValue(oldRow, entry.getKey(), operateMap));
+                    newRow.put(entry.getKey(), getOperateValue(entry.getKey(), operateMap));
+
                 else
                     newRow.put(entry.getKey(), entry.getValue());
 
@@ -77,7 +84,7 @@ public class DataFilter {
 
             //add
             for (Map.Entry<String, Object> addItem : addMap.entrySet()) {
-                newRow.put(addItem.getKey(), getOperateValue(oldRow, addItem.getKey(), addMap));
+                newRow.put(addItem.getKey(), getOperateValue(addItem.getKey(), addMap));
             }
 
             if (newRow.size() > 0)
@@ -88,16 +95,18 @@ public class DataFilter {
         return resultList;
     }
 
-    private static String getOperateValue(Map<String, Object> bindingMap, String key, Map opMap) {
-        Binding binding = new Binding();
+    Binding binding = new Binding();
 
+    private void setBinding(Map<String, Object> bindingMap) {
         for (Map.Entry<String, Object> entry : bindingMap.entrySet()) {
             binding.setVariable(entry.getKey(), entry.getValue());
         }
+    }
+
+    private String getOperateValue(String key, Map opMap) {
 
         GroovyShell gs = new GroovyShell(binding);
         Object evaluate = gs.evaluate("return " + opMap.get(key));
-
         return evaluate.toString();
     }
 
