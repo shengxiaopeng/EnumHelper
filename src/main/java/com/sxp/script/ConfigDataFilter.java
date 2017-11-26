@@ -13,22 +13,30 @@ import java.util.*;
  * @author sxp
  * @create 2017/11/25.
  */
-public class DataFilter {
+public class ConfigDataFilter {
 
     public static void main(String[] args) {
         //String alaisConfig="{'real':'alias'}";
+
         Map<String, Object> row = new HashMap<String, Object>();
         row.put("real", 3);
         row.put("normal", "normal");
         row.put("ignore", "ignore");
-        row.put("operate", "5");
+        row.put("operate",6);
+
+        Map<String, Object> row2 = new HashMap<String, Object>();
+        row2.put("real", 3);
+        row2.put("normal", null);
+        row2.put("ignore", "ignore");
+        row2.put("operate", 5);
 
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         list.add(row);
+        list.add(row2);
 
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 10; i++) {
-            List<Map<String, Object>> filter = new DataFilter().filter(list);
+        for (int i = 0; i < 1; i++) {
+            List<Map<String, Object>> filter = new ConfigDataFilter().filter(list);
             System.out.println(JSON.toJSONString(filter));
         }
         long period = System.currentTimeMillis() - start;
@@ -50,6 +58,8 @@ public class DataFilter {
     static String operateConfig = "{'operate':'(Integer.valueOf(real+operate))*100'}";
     static JSONObject operateMap = JSON.parseObject(operateConfig);
 
+    static String filterRowGroovyStr="normal != null && real >= 3 && !(operate  in [1, 2, 3,5])";
+
     /**
      * 对 List<Map> 进行过滤
      *
@@ -63,7 +73,12 @@ public class DataFilter {
 
             setBinding(oldRow);
             //对每行进行操作
-            //
+            //过滤行
+            if(!validateRow()){
+                System.out.println("row validate is not pass"+JSON.toJSONString(oldRow));
+                continue;
+            }
+
             Map<String, Object> newRow = new HashMap<String, Object>();
             for (Map.Entry<String, Object> entry : oldRow.entrySet()) {
                 //ignore
@@ -109,5 +124,13 @@ public class DataFilter {
         Object evaluate = gs.evaluate("return " + opMap.get(key));
         return evaluate.toString();
     }
+
+    private Boolean validateRow() {
+
+        GroovyShell gs = new GroovyShell(binding);
+        Object evaluate = gs.evaluate("return " + filterRowGroovyStr);
+        return Boolean.valueOf(evaluate.toString());
+    }
+
 
 }

@@ -34,7 +34,7 @@ public class SqlDataFilter {
         row.put("real", 3);
         row.put("normal", "normal");
         row.put("ignore", "ignore");
-        row.put("operate", "5");
+        row.put("operate", 6);
 
         Map<String, Object> row2 = new HashMap<String, Object>();
         row2.put("real", 3);
@@ -135,12 +135,11 @@ public class SqlDataFilter {
             } else {
                 listExpStr.add(item.toString());
             }
-            String join = StringUtils.join(listExpStr, " && ");
-            //System.out.println(join);
-            return join;
-        }
 
-        return null;
+        }
+        String join = StringUtils.join(listExpStr, " && ");
+        //System.out.println(join);
+        return join;
     }
 
     Map<String, String> initSelect() throws JSQLParserException {

@@ -28,8 +28,8 @@ public class JSqlParserTest {
 
     public static void main(String[] args) throws JSQLParserException {
 
-        //testWhere();
-        testSelect();
+        testWhere();
+       // testSelect();
 
     }
 
@@ -102,12 +102,12 @@ public class JSqlParserTest {
             } else {
                 listExpStr.add(item.toString());
             }
-            String join = StringUtils.join(listExpStr, " && ");
-            System.out.println(join);
+
 
         }
-
-        return null;
+        String join = StringUtils.join(listExpStr, " && ");
+        System.out.println(join);
+        return join;
     }
 
 
