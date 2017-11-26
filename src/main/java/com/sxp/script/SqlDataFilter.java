@@ -21,8 +21,10 @@ import java.io.StringReader;
 import java.util.*;
 
 /**
- * ${DESCRIPTION}
- *
+ * 通过sql语句过滤行
+ *   1 使用 Jsqlparser 对sql where语句进行解析，得到 groovy 行过滤条件，后续对遍历的每行进行验证
+ *   2 使用 Jsqlparser 对sql select语句进行解析，得到 {'alais':'columnName'}的Map，后续利用groovy脚本，对其进行取值，得到新行
+ *   3 遍历数据集每行，进行行过滤，及列key与value的选取及计算
  * @author sxp
  * @create 2017/11/26.
  */
