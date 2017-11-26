@@ -28,8 +28,8 @@ public class JSqlParserTest {
 
     public static void main(String[] args) throws JSQLParserException {
 
-        testWhere();
-
+        //testWhere();
+        testSelect();
 
     }
 
