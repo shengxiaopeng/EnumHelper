@@ -27,9 +27,9 @@ public class DataFilter {
         list.add(row);
 
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             List<Map<String, Object>> filter = new DataFilter().filter(list);
-            //System.out.println(JSON.toJSONString(filter));
+            System.out.println(JSON.toJSONString(filter));
         }
         long period = System.currentTimeMillis() - start;
         System.out.println("execute 1,000 times takes:" + period + " ms");

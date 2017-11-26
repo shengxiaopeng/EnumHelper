@@ -21,10 +21,10 @@ public class GroovyTest {
 
         // TODO Auto-generated method stub
 
-        groovyShell();
+        //groovyShell();
+        testGrooySql();
 
-
-       // groovyFile();
+        // groovyFile();
 
 
     }
@@ -36,38 +36,56 @@ public class GroovyTest {
 
         Class groovyClass = loader.parseClass(new File("C:\\normandy_workspace\\groovy\\src\\groovy\\GroovyDemo.groovy"));
 
-        GroovyObject groovyObject = (GroovyObject)groovyClass.newInstance();
+        GroovyObject groovyObject = (GroovyObject) groovyClass.newInstance();
 
-        Object[] param = {123,321};
+        Object[] param = {123, 321};
 
         int res = (Integer) groovyObject.invokeMethod("add", param);
 
-        System.out.println("res="+res);
+        System.out.println("res=" + res);
     }
 
     private static void groovyShell() {
-        Map<String,String> varMap=new HashMap<String, String>(8);
-        varMap.put("timestamp","timestamp/1000");
-        varMap.put("var","var*2");
+        Map<String, String> varMap = new HashMap<String, String>(8);
+        varMap.put("timestamp", "timestamp/1000");
+        varMap.put("var", "var*2");
 
 
         Binding binding = new Binding();
         binding.setVariable("var", 5);
-        binding.setVariable("timestamp",1501234567000L);
+        binding.setVariable("timestamp", 1501234567000L);
 
         GroovyShell gs = new GroovyShell(binding);
-        Map<String,String> valMap=new HashMap<String, String>();
-        for(Map.Entry<String,String> entry:varMap.entrySet()){
+        Map<String, String> valMap = new HashMap<String, String>();
+        for (Map.Entry<String, String> entry : varMap.entrySet()) {
             Object evaluate = gs.evaluate("return " + entry.getValue());
             System.out.println(evaluate);
 
-            varMap.put(entry.getKey(),evaluate.toString());
+            varMap.put(entry.getKey(), evaluate.toString());
         }
 
         //Object value = gs.evaluate("return var*10");//执行groovyshell脚本
 
-       // System.out.println(value.equals(50));
+        // System.out.println(value.equals(50));
         //System.out.println(binding.getVariable("abc").equals(123));
+    }
+
+    //
+    private static void testGrooySql() {
+        String sqlWhere="normal != null && real > 3 && !(add1  in [1, 2, 3]) && hello == 3";
+        Binding binding = new Binding();
+        binding.setVariable("normal", null);
+        binding.setVariable("real", 5);
+        binding.setVariable("add1",3);
+        binding.setVariable("hello",3);
+
+
+        GroovyShell gs = new GroovyShell(binding);
+
+        Object evaluate = gs.evaluate("return " +sqlWhere);
+        System.out.println(evaluate);
+
+
     }
 
 
