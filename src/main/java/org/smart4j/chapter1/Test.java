@@ -27,7 +27,6 @@ public class Test {
 
     public static void  test(Integer...integers){
 
-
     }
 
 

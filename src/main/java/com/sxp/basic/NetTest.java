@@ -25,8 +25,8 @@ public class NetTest {
     public static void main(String[] args) {
 
         try {
-//            testNet();
-            testEncoder();
+            testNet();
+           // testEncoder();
         } catch (Exception e) {
             e.printStackTrace();
         }
