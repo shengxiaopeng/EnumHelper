@@ -14,12 +14,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 
-/**
- * ${DESCRIPTION}
- *
- * @author sxp
- * @create 2017/9/10.
- */
 public class NetTest {
 
     public static void main(String[] args) {

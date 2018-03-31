@@ -1,13 +1,12 @@
 package com.sxp.classloader;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-
-import static java.lang.Thread.currentThread;
 
 /**
  * ${DESCRIPTION}
@@ -28,37 +27,54 @@ public class JarLoader {
         }
 
         public void addJar(URL url) {
+            /**
+             * Appends the specified URL to the list of URLs to search for
+             * classes and resources.
+             * <p>
+             * If the URL specified is <code>null</code> or is already in the
+             * list of URLs, or if this loader is closed, then invoking this
+             * method has no effect.
+             *
+             * @param url the URL to be added to the search path of URLs
+             */
             this.addURL(url);
         }
 
     }
 
-    public static void main(String[] args) throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
 
-        //
-        //loadJarByURLClassLoader();
-        loadJarByMyJarLoader();
+        //method 1
+        loadJarByURLClassLoader();
+        //method 2
+       // loadJarByMyJarLoader();
 
 
     }
 
     private static void loadJarByMyJarLoader() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         MyJarLoader jarLoader=new MyJarLoader(new URL[]{},Thread.currentThread().getContextClassLoader());
-        jarLoader.addJar(new File("C:/Users/sxp/Desktop/hello.jar").toURI().toURL());
-        Class<?> clazz= jarLoader.loadClass("com.sxp.basic.NetTest");
+        jarLoader.addJar(new File("C:/Users/sxp/Desktop/hello1.jar").toURI().toURL());
+        Class<?> clazz= jarLoader.loadClass("com.example.Test");
         Object object=  clazz.newInstance();
-        Method method= clazz.getDeclaredMethod("testNet");
+        Method method= clazz.getDeclaredMethod("test");
         method.setAccessible(true);
         method.invoke(object);
     }
 
-    private static void loadJarByURLClassLoader() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        URL jarUrl=new URL("file:/C:/Users/sxp/Desktop/hello.jar");
+    private static void loadJarByURLClassLoader() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        URL jarUrl=new URL("file:///C:/Users/sxp/Desktop/hello1.jar");
+      /*  URLConnection urlConnection = jarUrl.openConnection();
+        InputStream inputStream = urlConnection.getInputStream();
+        IOUtils.copy(inputStream,System.out);*/
+
+       // URL jarUrl = new File("C:/Users/sxp/Desktop/hello1.jar").toURI().toURL();
+
         URL[] urls=new URL[]{jarUrl};
-        URLClassLoader jarLoader=new URLClassLoader(urls, currentThread().getContextClassLoader());
-        Class<?> clazz= jarLoader.loadClass("com.sxp.basic.NetTest");
+        URLClassLoader jarLoader=new URLClassLoader(urls, Thread.currentThread().getContextClassLoader());
+        Class<?> clazz= jarLoader.loadClass("com.example.Test");
         Object object=  clazz.newInstance();
-        Method method= clazz.getDeclaredMethod("testNet");
+        Method method= clazz.getDeclaredMethod("test");
         method.setAccessible(true);
         method.invoke(object);
     }

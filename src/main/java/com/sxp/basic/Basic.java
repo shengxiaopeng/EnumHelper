@@ -7,12 +7,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ${DESCRIPTION}
- *
- * @author sxp
- * @create 2016/9/30.
- */
 public class Basic {
 
     final  int a;
@@ -43,7 +37,7 @@ public class Basic {
         List<Integer> listInt=null;
         List listL=listInt;
         //List<Object> listO=listInt;
-
+        System.out.println("hello world");
     }
 
    private  class  Inner{
