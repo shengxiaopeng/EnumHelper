@@ -77,6 +77,18 @@ public class JarLoader {
         Method method= clazz.getDeclaredMethod("test");
         method.setAccessible(true);
         method.invoke(object);
+
+        // for test
+        URLClassLoader jarLoader1=new URLClassLoader(urls, Thread.currentThread().getContextClassLoader());
+        URLClassLoader jarLoader2=new URLClassLoader(urls, Thread.currentThread().getContextClassLoader());
+
+        Class<?> aClass =  jarLoader1.loadClass("com.example.Test");
+        Class<?> aClass1 = jarLoader2.loadClass("com.example.Test");
+
+        System.out.println(aClass.hashCode());
+        System.out.println(aClass1.hashCode());
+
+
     }
 
 }
